@@ -1,19 +1,20 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('genderWageTable.chartView', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-            templateUrl: 'view1/view1.html',
-            controller: 'View1Ctrl as gt'
+        $routeProvider.when('/chartView', {
+            templateUrl: 'chartView/chartView.html',
+            controller: 'ChartViewCtrl as gt'
         });
     }])
 
-    .controller('View1Ctrl', [
-        '$http',
-        function ($http) {
+    .controller('ChartViewCtrl', [
+        'dataService',
+        function (dataService) {
 
-            var mapRecordToObject = function (record) {
+            var gt = this;
+            gt.mapRecordToObject = function (record) {
                 var columns = [
                         'jobtitle',
                         'fAvgRate', 'fEmpNum', 'fAvgLongevity',
@@ -29,21 +30,29 @@ angular.module('myApp.view1', ['ngRoute'])
                 });
                 return output;
             };
-
-            var gt = this;
-
-            var gridOptions = {
+            gt.gridOptions = {
                 columnDefs: [
-                    {headerName: "Job Title", field: "jobtitle"},
+                    {headerName: "Job Title", field: "jobtitle", pinned: "left"},
                     {
                         headerName: "Women", groupId: "femaleFields",
                         children: [
-                            {headerName: "Average Hourly Rate", field: "fAvgRate", type: "numberColumn"},
-                            {headerName: "Number of Employees", field: "fEmpNum", type: "numberColumn"},
+                            {
+                                headerName: "Average Hourly Rate",
+                                field: "fAvgRate",
+                                type: "numberColumn",
+                                width: 150
+                            },
+                            {
+                                headerName: "Number of Employees",
+                                field: "fEmpNum",
+                                type: "numberColumn",
+                                width: 150
+                            },
                             {
                                 headerName: "Average Months Longevity in Classification",
                                 field: "fAvgLongevity",
-                                type: "numberColumn"
+                                type: "numberColumn",
+                                width: 150
                             }
                         ]
                     },
@@ -84,7 +93,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     // set the default column width
                     width: 150,
                     // make every column editable
-                    editable: true,
+                    editable: false,
                     // make every column use 'text' filter by default
                     filter: 'text'
                 },
@@ -100,38 +109,15 @@ angular.module('myApp.view1', ['ngRoute'])
                 },
                 rowData: null,
                 enableFilter: true,
-                floatingFilter: true
+                floatingFilter: true,
+                pagination: true,
+                paginationPageSize: 25
             };
-            var gridDiv = document.querySelector('#genderTable');
+            gt.gridDiv = document.querySelector('#genderTable');
 
-            $http({
-                method: 'GET',
-                url: 'https://data.seattle.gov/api/views/cf52-s8er/rows.json?api_key=SCC1c0Cove7ypmBeuf3dTX2WZOk6\n' +
-                'qEfCAki6MoNi'
-            }).then(function successCallback(response) {
-                gt.data = _.map(response.data.data, mapRecordToObject);
-                new agGrid.Grid(gridDiv, gridOptions);
-                gridOptions.api.setRowData(gt.data);
-                return gt.data;
-            }, function errorCallback(response) {
-                console.log(response);
-            });
-
-// setup the grid after the page has finished loading
-//             var gridDiv = document.querySelector('#genderTable');
-//             new agGrid.Grid(gridDiv, gridOptions);
-
-            // do http request to get our sample data - not using any framework to keep the example self contained.
-            // you will probably use a framework like JQuery, Angular or something else to do your HTTP calls.
-            // var httpRequest = new XMLHttpRequest();
-            // httpRequest.open('GET', 'https://raw.githubusercontent.com/ag-grid/ag-grid-docs/master/src/olympicWinnersSmall.json');
-            // httpRequest.send();
-            // httpRequest.onreadystatechange = function () {
-            //     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-            //         var httpResult = JSON.parse(httpRequest.responseText);
-            //         gridOptions.api.setRowData(httpResult);
-            //     }
-            // };
-
-
+            Promise.resolve(dataService).then(function (response) {
+                gt.data = _.map(response.data.data, gt.mapRecordToObject);
+                gt.grid = new agGrid.Grid(gt.gridDiv, gt.gridOptions);
+                gt.gridOptions.api.setRowData(gt.data);
+            })
         }]);
