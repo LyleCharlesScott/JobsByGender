@@ -2,12 +2,15 @@
 
 angular.module('genderWageTable', [
     'ngRoute',
-    'genderWageTable.chartView',
+    'genderWageTable.gridOptions',
+    'genderWageTable.agGridView',
+    'genderWageTable.customView',
     'genderWageTable.version',
-    'genderWageTable.SeattleCityConnectionService'
+    'genderWageTable.SeattleCityConnectionService',
+    'genderWageTable.mapRecordToObject'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/chartView'});
+  $routeProvider.otherwise({redirectTo: '/agGridView'});
 }]);
