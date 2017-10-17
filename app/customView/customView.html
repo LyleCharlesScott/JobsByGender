@@ -1,10 +1,25 @@
 <section class="container">
     <h1 class="heading">Jobs by Gender</h1>
-
+<input ng-model="cv.pageSize" type="number" ng-change="cv.changePageSize(cv.pageSize)">
     <div style="height: 300px; box-sizing: border-box;">
-        {{cv.data}}
-        <ul>
-            <li ng-repeat="item in cv.data">{{item}}</li>
+        {{cv.bop}}
+        <ul ng-model="cv.data">
+            <li ng-repeat="item in cv.currentPageData">
+                <span>{{item.jobtitle}}</span>
+                <span>{{item.fAvgRate || 0}}</span>
+                <span>{{item.mAvgRate || 0}}</span>
+                <span>{{item.difference || "zip"}}</span>
+
+                <span ng-if="item.difference && (item.fAvgRate >= item.mAvgRate)" class="fa fa-female"></span>
+                <span ng-if="item.difference && (item.fAvgRate <= item.mAvgRate)" class="fa fa-male"></span>
+            </li>
         </ul>
+        <button ng-click="cv.first()">1</button>
+        <button ng-click="cv.back()">back</button>
+        <input ng-model="cv.currentPageNumber" type="number" ng-change="cv.goToPage(cv.currentPageNumber)">
+        <button ng-click="cv.forward()">forward</button>
+        <button ng-click="cv.last()">{{cv.totalPages()}}</button>
+
+
     </div>
 </section>
