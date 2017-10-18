@@ -28,3 +28,31 @@
   height: 425px;
   padding-bottom: 10%;
 }
+
+#customView {
+  max-width: 850px;
+}
+
+.fEarnMore {
+  background-color: lightseagreen;
+}
+
+.mEarnMore {
+  background-color: lightsalmon;
+}
+
+.earnEqual {
+  background-color: beige;
+}
+
+.genderButtonSelect {
+  color: #337ab7;
+  transition-timing-function: ease-in-out;
+  transition: 0.3s;
+}
+
+.rowDisabled {
+  background-color: beige;
+  color: lightgrey;
+  font-style: italic;
+}

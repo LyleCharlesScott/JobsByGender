@@ -15,61 +15,63 @@ angular.module('genderWageTable.customView', ['ngRoute'])
         '$scope',
         function (dataService, mapRecordToObject, $scope) {
 
-            var gc = this;
-            gc.pageSize = 25;
-            gc.currentPageNumber = 1;
+            var cv = this;
+            cv.currencyRegExp = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/;
+            cv.pageSize = 25;
+            cv.currentPageNumber = 1;
+            cv.minimumDifference = 0;
 
-            gc.paginate = function (data, page) {
+            cv.paginate = function (data, page) {
                 page--;
-                gc.currentPageData = data.slice(page * gc.pageSize, (page + 1) * gc.pageSize);
+                cv.currentPageData = data.slice(page * cv.pageSize, (page + 1) * cv.pageSize);
             };
-            gc.first = function () {
-                gc.currentPageNumber = 1;
-                gc.paginate(gc.data, 1);
+            cv.first = function () {
+                cv.currentPageNumber = 1;
+                cv.paginate(cv.data, 1);
             };
-            gc.back = function () {
-                if (gc.currentPageNumber > 1) {
-                    gc.currentPageNumber--
+            cv.previous = function () {
+                if (cv.currentPageNumber > 1) {
+                    cv.currentPageNumber--
                 }
-                gc.paginate(gc.data, gc.currentPageNumber);
+                cv.paginate(cv.data, cv.currentPageNumber);
             };
-            gc.forward = function () {
-                if (gc.currentPageNumber < gc.totalPages()) {
-                    gc.currentPageNumber++;
+            cv.next = function () {
+                if (cv.currentPageNumber < cv.totalPages()) {
+                    cv.currentPageNumber++;
                 }
-                gc.paginate(gc.data, gc.currentPageNumber);
+                cv.paginate(cv.data, cv.currentPageNumber);
             };
-            gc.last = function () {
-                gc.currentPageNumber = gc.totalPages();
-                gc.paginate(gc.data, gc.currentPageNumber);
+            cv.last = function () {
+                cv.currentPageNumber = cv.totalPages();
+                cv.paginate(cv.data, cv.currentPageNumber);
             };
 
-            gc.goToPage = function (page) {
+            cv.goToPage = function (page) {
                 console.log(page);
-                gc.paginate(gc.data, page);
+                cv.paginate(cv.data, page);
             };
 
-            gc.changePageSize = function (num) {
-                gc.currentPageNumber = 1;
-                gc.pageSize = num;
-                gc.paginate(gc.data, 1);
+            cv.changePageSize = function (num) {
+                cv.currentPageNumber = 1;
+                cv.pageSize = num;
+                cv.paginate(cv.data, 1);
             };
 
-            gc.totalPages = function () {
-                if (gc.data) {
-                    return _.ceil(gc.data.length / gc.pageSize);
+            cv.totalPages = function () {
+                if (cv.data) {
+                    return _.ceil(cv.data.length / cv.pageSize);
                 } else {
                     return 0;
                 }
             };
 
-            gc.earnsMore = function (gender) {
-                console.log(gc.currentGender === gender);
-                if (gc.currentGender === gender) {
-                    gc.currentGender = null;
-                    return gc.paginate(gc.originalData, gc.currentPageNumber);
+            cv.earnsMore = function (gender) {
+                if (cv.currentGender === gender) {
+                    cv.currentGender = null;
+                    cv.data = cv.originalData;
+                    return cv.paginate(cv.originalData, cv.currentPageNumber);
                 } else {
-                    gc.currentGender = gender;
+                    cv.currentGender = gender;
                 }
                 if (gender === "men") {
                     gender = -1
@@ -77,21 +79,27 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 if (gender === "women") {
                     gender = 1
                 }
-                gc.data = _.filter(gc.originalData, function (row) {
+                cv.data = _.filter(cv.originalData, function (row) {
                     return Math.sign(row.difference) === gender;
                 });
-                gc.paginate(gc.data, gc.currentPageNumber);
-                console.log(gc.data);
-
+                cv.paginate(cv.data, 1);
             };
 
-            if (!gc.data) {
+            cv.filterMinimum = function(){
+                cv.data = _.filter(cv.originalData, function(row){
+                    return Math.abs(row.difference) >= cv.minimumDifference;
+                });
+                cv.paginate(cv.data, 1);
+            };
+
+
+
+            if (!cv.data) {
                 Promise.resolve(dataService).then(function (response) {
-                    gc.data = _.map(response.data.data, mapRecordToObject);
-                    gc.data.pop();
-                    console.log(gc.data);
-                    gc.originalData = gc.data;
-                    gc.paginate(gc.data, 1);
+                    cv.data = _.map(response.data.data, mapRecordToObject);
+                    cv.data.pop();
+                    cv.originalData = cv.data;
+                    cv.paginate(cv.data, 1);
                     $scope.$apply();
                 });
             }
