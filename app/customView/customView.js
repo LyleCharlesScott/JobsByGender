@@ -63,13 +63,37 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 }
             };
 
+            gc.earnsMore = function (gender) {
+                console.log(gc.currentGender === gender);
+                if (gc.currentGender === gender) {
+                    gc.currentGender = null;
+                    return gc.paginate(gc.originalData, gc.currentPageNumber);
+                } else {
+                    gc.currentGender = gender;
+                }
+                if (gender === "men") {
+                    gender = -1
+                }
+                if (gender === "women") {
+                    gender = 1
+                }
+                gc.data = _.filter(gc.originalData, function (row) {
+                    return Math.sign(row.difference) === gender;
+                });
+                gc.paginate(gc.data, gc.currentPageNumber);
+                console.log(gc.data);
+
+            };
+
             if (!gc.data) {
                 Promise.resolve(dataService).then(function (response) {
                     gc.data = _.map(response.data.data, mapRecordToObject);
                     gc.data.pop();
                     console.log(gc.data);
+                    gc.originalData = gc.data;
                     gc.paginate(gc.data, 1);
                     $scope.$apply();
                 });
             }
-        }]);
+        }])
+;

@@ -13,4 +13,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/agGridView'});
-}]);
+}]).
+filter('makePositive', function() {
+    return function(num) { return Math.abs(num); }
+});
