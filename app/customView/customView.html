@@ -1,11 +1,11 @@
 <section class="container">
-    <h1 class="heading">Jobs by Gender</h1>
+   <h1 class="heading">Jobs by Gender<span class="small pull-right">data from https://data.seattle.gov</span></h1>
 
     <div class="container" id="customView">
         <table ng-model="cv.data" class="table">
             <tr class=".row">
                 <th class="col-md-4"><div>Job Title</div>
-                    <div class="input-group">
+                    <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">results per page:</span>
                 <input ng-model="cv.pageSize" class="form-control" type="number" ng-change="cv.changePageSize(cv.pageSize)">
                     </div>
@@ -15,9 +15,9 @@
                         <span>Women's Average Hourly Rate</span>
                         <div ng-click="cv.earnsMore('women')">
                             <label class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x"
+                                <i class="fa fa-circle fa-stack-2x animated bounceInDown"
                                    ng-class="{['genderButtonSelect']: cv.currentGender === 'women'}"></i>
-                                <i class="fa fa-venus fa-inverse fa-stack-1x"></i>
+                                <i class="fa fa-venus fa-inverse fa-stack-1x animated bounceInDown"></i>
                             </label>
                         </div>
                     </th>
@@ -25,16 +25,16 @@
                         <span>Men's Average Hourly Rate</span>
                         <div ng-click="cv.earnsMore('men')">
                             <label class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x"
+                                <i class="fa fa-circle fa-stack-2x animated bounceInDown"
                                    ng-class="{['genderButtonSelect']: cv.currentGender === 'men'}"></i>
-                                <i class="fa fa-mars fa-inverse fa-stack-1x"></i>
+                                <i class="fa fa-mars fa-inverse fa-stack-1x animated bounceInDown"></i>
                             </label>
                         </div>
                     </th>
                 </div>
                 <th class="col-md-2" aria-label="Difference in average hourly rate by gender">
                     <div>Minimum Difference</div>
-                    <div class="input-group">
+                    <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
                         <input type="text" class="form-control" aria-label="Amount" ng-model="cv.minimumDifference"
                                ng-change="cv.filterMinimum()" ng-pattern="cv.currencyRegExp">
@@ -43,7 +43,7 @@
                 <th class="col-md-2">Who earns more?</th>
             </tr>
 
-            <tr ng-repeat="item in cv.currentPageData" class=".row"
+            <tr ng-repeat="item in cv.currentPageData" class="animated rubberBand"
                 ng-class="{rowDisabled: !item.fAvgRate || !item.mAvgRate, fEarnMore: item.fAvgRate > item.mAvgRate,
                 mEarnMore: item.fAvgRate < item.mAvgRate, earnEqual: item.fAvgRate && item.mAvgRate && !item.difference}">
                 <td>{{item.jobtitle}}</td>
@@ -63,7 +63,5 @@
             <button class="btn btn-primary" ng-click="cv.next()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next</button>
             <button class="btn btn-primary" ng-click="cv.last()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}</button>
         </form>
-
-
     </div>
 </section>
