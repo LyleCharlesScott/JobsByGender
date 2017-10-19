@@ -1,5 +1,5 @@
 # Jobs by Gender -
-a chart showing data from the Seattle City API
+## a chart showing data from the Seattle City API
 
 This project is a code challenge for Moz.com, using an angular-seed package to set up.
 (https://github.com/angular/angular-seed.git)
