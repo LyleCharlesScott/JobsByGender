@@ -19,5 +19,6 @@ to load both npm and bower dependencies and start a simple development server. T
 
 The input on the left upper part of the chart controls the number of data items displayed on each page.
 The Mars and Venus icons change the data diplay to only show job titles in which men or women earn more,
-respectively. The next input field is for filtering the data by minimum difference in hourly wage. Pagination
-controls are at the bottom of the screen.
+respectively. The next input field is for filtering the data by minimum difference in hourly wage. Click
+on column titles to toggle between ascending and descending column sort. Pagination controls are at the
+bottom of the chart.
