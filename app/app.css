@@ -29,6 +29,10 @@
   padding-bottom: 10%;
 }
 
+#cvPageNumber {
+  padding: 4%;
+}
+
 #customView {
   max-width: 850px;
 }

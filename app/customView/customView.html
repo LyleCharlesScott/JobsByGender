@@ -1,15 +1,19 @@
 <section class="container">
-   <h1 class="heading">Jobs by Gender<span class="small pull-right">data from https://data.seattle.gov</span></h1>
+    <h1 class="heading">Jobs by Gender<span class="small pull-right">data from https://data.seattle.gov</span></h1>
 
     <div class="container" id="customView">
         <table ng-model="cv.data" class="table">
-            <tr class=".row">
-                <th class="col-md-4"><div>Job Title</div>
+            <tr>
+
+                <th class="col-md-4">
+                    <div class="h4">Job Title</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">results per page:</span>
-                <input ng-model="cv.pageSize" class="form-control" type="number" ng-change="cv.changePageSize(cv.pageSize)">
+                        <input ng-model="cv.pageSize" class="form-control" type="number"
+                               ng-change="cv.changePageSize(cv.pageSize)">
                     </div>
                 </th>
+
                 <div>
                     <th class="col-md-2">
                         <span>Women's Average Hourly Rate</span>
@@ -21,6 +25,7 @@
                             </label>
                         </div>
                     </th>
+
                     <th class="col-md-2">
                         <span>Men's Average Hourly Rate</span>
                         <div ng-click="cv.applyFilters('men')">
@@ -32,11 +37,12 @@
                         </div>
                     </th>
                 </div>
+
                 <th class="col-md-2" aria-label="Difference in average hourly rate by gender">
                     <div>Minimum Difference</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" aria-label="Amount" ng-model="cv.minimumDifference"
+                        <input type="text" class="form-control" ng-model="cv.minimumDifference"
                                ng-change="cv.applyFilters()">
                     </div>
                 </th>
@@ -58,12 +64,17 @@
             </tr>
         </table>
 
-        <form class="input-group">
-            <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
-            <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">Previous</button>
-            <span class="badge">{{cv.currentPageNumber}}</span>
-            <button class="btn btn-primary" ng-click="cv.next()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next</button>
-            <button class="btn btn-primary" ng-click="cv.last()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}</button>
-        </form>
+        <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
+        <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">
+            Previous
+        </button>
+        <button class="btn btn-primary" ng-click="cv.next()"
+                ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next
+        </button>
+        <button class="btn btn-primary" ng-click="cv.last()"
+                ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}
+        </button>
+        <span id="cvPageNumber" class="h1">{{cv.currentPageNumber}}</span>
+
     </div>
 </section>
