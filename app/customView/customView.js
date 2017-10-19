@@ -21,41 +21,48 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.minimumDifference = 0;
             cv.genderGlossery = {men: -1, women: 1};
             cv.currentGender = 'none';
+            cv.toggle = {
+                fAvgRate: false,
+                mAvgRate: false,
+                difference: false,
+                jobtitle: false
+            };
 
-            cv.paginate = function (data, page) {
+            cv.paginate = function (page) {
+                cv.currentPageNumber = page;
                 page--;
-                cv.currentPageData = data.slice(page * cv.pageSize, (page + 1) * cv.pageSize);
+                return cv.currentPageData = cv.data.slice(page * cv.pageSize, (page + 1) * cv.pageSize);
             };
+
             cv.first = function () {
-                cv.currentPageNumber = 1;
-                cv.paginate(cv.data, 1);
+                return cv.goToPage(1);
             };
+
             cv.previous = function () {
                 if (cv.currentPageNumber > 1) {
                     cv.currentPageNumber--
                 }
-                cv.paginate(cv.data, cv.currentPageNumber);
+                cv.goToPage(cv.currentPageNumber);
             };
+
             cv.next = function () {
                 if (cv.currentPageNumber < cv.totalPages()) {
                     cv.currentPageNumber++;
                 }
-                cv.paginate(cv.data, cv.currentPageNumber);
+                cv.goToPage(cv.currentPageNumber);
             };
+
             cv.last = function () {
-                cv.currentPageNumber = cv.totalPages();
-                cv.paginate(cv.data, cv.currentPageNumber);
+                return cv.goToPage(cv.totalPages());
             };
 
             cv.goToPage = function (page) {
-                console.log(page);
-                cv.paginate(cv.data, page);
+                return cv.paginate(page);
             };
 
             cv.changePageSize = function (num) {
-                cv.currentPageNumber = 1;
                 cv.pageSize = num;
-                cv.paginate(cv.data, 1);
+                return cv.goToPage(1);
             };
 
             cv.totalPages = function () {
@@ -72,6 +79,25 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 } else {
                     cv.currentGender = newGender;
                 }
+            };
+
+            cv.sortNumberColumn = function (column) {
+                cv.toggle[column] = !cv.toggle[column];
+                cv.data = _.orderBy(cv.data, [function(row){
+                    if (row[column]) {
+                        return parseInt(row[column], 10);
+                    } else {
+                        return cv.toggle[column] ? 'z' : '';
+                    }
+                }], (cv.toggle[column] ? 'asc' : 'desc'));
+                return cv.goToPage(1);
+            };
+
+            cv.sortTextColumn = function (column) {
+                cv.toggle[column] = !cv.toggle[column];
+                cv.data = _.orderBy(cv.data, [column], (cv.toggle[column] ? 'asc' : 'desc'));
+                cv.currentPageNumber=1;
+                return cv.goToPage(1);
             };
 
             cv.genderFilter = function(){
@@ -91,12 +117,13 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             };
 
             cv.applyFilters = function (newGender) {
+
             if (newGender) {
                 cv.updateCurrentGender(newGender)
             }
                 cv.data = cv.genderFilter();
                 cv.data = cv.filterMinimum(cv.data);
-                cv.paginate(cv.data, 1);
+                return cv.goToPage(1);
             };
 
             if (!cv.data) {
@@ -104,7 +131,8 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                     cv.data = _.map(response.data.data, mapRecordToObject);
                     cv.data.pop();
                     cv.originalData = cv.data;
-                    cv.paginate(cv.data, 1);
+                    cv.goToPage(1);
+                    console.log(cv.data);
                     $scope.$apply();
                 });
             }

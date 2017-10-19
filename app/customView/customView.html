@@ -6,7 +6,7 @@
             <tr>
 
                 <th class="col-md-4">
-                    <div class="h4">Job Title</div>
+                    <div class="h4" ng-click="cv.sortTextColumn('jobtitle')">Job Title</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">results per page:</span>
                         <input ng-model="cv.pageSize" class="form-control" type="number"
@@ -16,7 +16,7 @@
 
                 <div>
                     <th class="col-md-2">
-                        <span>Women's Average Hourly Rate</span>
+                        <span ng-click="cv.sortNumberColumn('fAvgRate')">Women's Average Hourly Rate</span>
                         <div ng-click="cv.applyFilters('women')">
                             <label class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x animated bounceInDown"
@@ -27,7 +27,7 @@
                     </th>
 
                     <th class="col-md-2">
-                        <span>Men's Average Hourly Rate</span>
+                        <span ng-click="cv.sortNumberColumn('mAvgRate')">Men's Average Hourly Rate</span>
                         <div ng-click="cv.applyFilters('men')">
                             <label class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x animated bounceInDown"
@@ -39,7 +39,7 @@
                 </div>
 
                 <th class="col-md-2" aria-label="Difference in average hourly rate by gender">
-                    <div>Minimum Difference</div>
+                    <div ng-click="cv.sortNumberColumn('difference')">Minimum Difference</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
                         <input type="text" class="form-control" ng-model="cv.minimumDifference"
