@@ -16,10 +16,11 @@ angular.module('genderWageTable.customView', ['ngRoute'])
         function (dataService, mapRecordToObject, $scope) {
 
             var cv = this;
-            cv.currencyRegExp = /(?=.)^\$?(([1-9][0-9]{0,2}(,[0-9]{3})*)|[0-9]+)?(\.[0-9]{1,2})?$/;
             cv.pageSize = 25;
             cv.currentPageNumber = 1;
             cv.minimumDifference = 0;
+            cv.genderGlossery = {men: -1, women: 1};
+            cv.currentGender = 'none';
 
             cv.paginate = function (data, page) {
                 page--;
@@ -65,30 +66,36 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 }
             };
 
-            cv.earnsMore = function (gender) {
-                if (cv.currentGender === gender) {
-                    cv.currentGender = null;
-                    cv.data = cv.originalData;
-                    return cv.paginate(cv.originalData, cv.currentPageNumber);
+            cv.updateCurrentGender = function (newGender) {
+                if (cv.currentGender === newGender) {
+                    cv.currentGender = 'none';
                 } else {
-                    cv.currentGender = gender;
+                    cv.currentGender = newGender;
                 }
-                if (gender === "men") {
-                    gender = -1
-                }
-                if (gender === "women") {
-                    gender = 1
-                }
-                cv.data = _.filter(cv.originalData, function (row) {
-                    return Math.sign(row.difference) === gender;
-                });
-                cv.paginate(cv.data, 1);
             };
 
-            cv.filterMinimum = function(){
-                cv.data = _.filter(cv.originalData, function(row){
+            cv.genderFilter = function(){
+                if (cv.currentGender === 'none') {
+                    return cv.originalData;
+                } else {
+                    return _.filter(cv.originalData, function (row) {
+                        return Math.sign(row.difference) === cv.genderGlossery[cv.currentGender];
+                    });
+                }
+            };
+
+            cv.filterMinimum = function(data){
+                return _.filter(data, function(row){
                     return Math.abs(row.difference) >= cv.minimumDifference;
                 });
+            };
+
+            cv.applyFilters = function (newGender) {
+            if (newGender) {
+                cv.updateCurrentGender(newGender)
+            }
+                cv.data = cv.genderFilter();
+                cv.data = cv.filterMinimum(cv.data);
                 cv.paginate(cv.data, 1);
             };
 

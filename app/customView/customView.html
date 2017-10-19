@@ -13,7 +13,7 @@
                 <div>
                     <th class="col-md-2">
                         <span>Women's Average Hourly Rate</span>
-                        <div ng-click="cv.earnsMore('women')">
+                        <div ng-click="cv.applyFilters('women')">
                             <label class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x animated bounceInDown"
                                    ng-class="{['genderButtonSelect']: cv.currentGender === 'women'}"></i>
@@ -23,7 +23,7 @@
                     </th>
                     <th class="col-md-2">
                         <span>Men's Average Hourly Rate</span>
-                        <div ng-click="cv.earnsMore('men')">
+                        <div ng-click="cv.applyFilters('men')">
                             <label class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x animated bounceInDown"
                                    ng-class="{['genderButtonSelect']: cv.currentGender === 'men'}"></i>
@@ -37,7 +37,7 @@
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
                         <input type="text" class="form-control" aria-label="Amount" ng-model="cv.minimumDifference"
-                               ng-change="cv.filterMinimum()" ng-pattern="cv.currencyRegExp">
+                               ng-change="cv.applyFilters()">
                     </div>
                 </th>
                 <th class="col-md-2">Who earns more?</th>
@@ -57,9 +57,11 @@
                 </td>
             </tr>
         </table>
+
         <form class="input-group">
             <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
             <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">Previous</button>
+            <span class="badge">{{cv.currentPageNumber}}</span>
             <button class="btn btn-primary" ng-click="cv.next()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next</button>
             <button class="btn btn-primary" ng-click="cv.last()" ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}</button>
         </form>
