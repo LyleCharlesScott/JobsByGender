@@ -51,7 +51,7 @@
 
             <tr ng-repeat="item in cv.currentPageData" class="animated rubberBand"
                 ng-class="{rowDisabled: !item.fAvgRate || !item.mAvgRate, fEarnMore: item.fAvgRate > item.mAvgRate,
-                mEarnMore: item.fAvgRate < item.mAvgRate, earnEqual: item.fAvgRate && item.mAvgRate && !item.difference}">
+                mEarnMore: item.fAvgRate < item.mAvgRate, earnEqual: item.fAvgRate && item.mAvgRate && item.difference=='0.00'}">
                 <td>{{item.jobtitle}}</td>
                 <td>{{item.fAvgRate | currency}}</td>
                 <td>{{item.mAvgRate | currency}}</td>
@@ -59,7 +59,7 @@
                 <td>
                     <span ng-if="item.fAvgRate > item.mAvgRate" class="fa fa-venus"></span>
                     <span ng-if="item.fAvgRate < item.mAvgRate" class="fa fa-mars"></span>
-                    <span ng-if="item.fAvgRate && item.mAvgRate && !item.difference" class="fa fa-balance-scale"></span>
+                    <span ng-if="item.fAvgRate && item.mAvgRate && item.difference=='0.00'" class="fa fa-balance-scale"></span>
                 </td>
             </tr>
         </table>
