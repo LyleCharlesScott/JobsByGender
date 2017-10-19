@@ -5,12 +5,15 @@ angular.module('genderWageTable', [
     'genderWageTable.customView',
     'genderWageTable.SeattleCityConnectionService',
     'genderWageTable.mapRecordToObject'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/customView'});
-}]).
-filter('makePositive', function() {
-    return function(num) { return Math.abs(num); }
+    $routeProvider.otherwise({redirectTo: '/customView'});
+}]).filter('makePositive', function () {
+    return function (number) {
+        if (_.isFinite(parseFloat(number))) {
+            return Math.abs(number);
+        }
+        return null;
+    }
 });

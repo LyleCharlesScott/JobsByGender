@@ -22,10 +22,10 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.genderGlossery = {men: -1, women: 1};
             cv.currentGender = 'none';
             cv.toggle = {
-                fAvgRate: false,
                 mAvgRate: false,
+                fAvgRate: false,
                 difference: false,
-                jobtitle: false
+                jobTitle: false
             };
 
             cv.paginate = function (page) {
@@ -83,44 +83,45 @@ angular.module('genderWageTable.customView', ['ngRoute'])
 
             cv.sortNumberColumn = function (column) {
                 cv.toggle[column] = !cv.toggle[column];
-                cv.data = _.orderBy(cv.data, [function(row){
-                    if (row[column]) {
-                        return parseInt(row[column], 10);
+                cv.data = _.orderBy(cv.data, [function (row) {
+                    if (!(_.isNull(row[column]))) {
+                        return parseFloat(row[column]);
                     } else {
                         return cv.toggle[column] ? 'z' : '';
                     }
                 }], (cv.toggle[column] ? 'asc' : 'desc'));
+                console.log(cv.data);
                 return cv.goToPage(1);
             };
 
             cv.sortTextColumn = function (column) {
                 cv.toggle[column] = !cv.toggle[column];
                 cv.data = _.orderBy(cv.data, [column], (cv.toggle[column] ? 'asc' : 'desc'));
-                cv.currentPageNumber=1;
+                cv.currentPageNumber = 1;
                 return cv.goToPage(1);
             };
 
-            cv.genderFilter = function(){
+            cv.genderFilter = function () {
+                var dataToFilter = (cv.data.length === cv.originalData.length) ? cv.data : cv.originalData;
                 if (cv.currentGender === 'none') {
-                    return cv.originalData;
+                    return dataToFilter;
                 } else {
-                    return _.filter(cv.originalData, function (row) {
+                    return _.filter(dataToFilter, function (row) {
                         return Math.sign(row.difference) === cv.genderGlossery[cv.currentGender];
                     });
                 }
             };
 
-            cv.filterMinimum = function(data){
-                return _.filter(data, function(row){
+            cv.filterMinimum = function (data) {
+                return _.filter(data, function (row) {
                     return Math.abs(row.difference) >= cv.minimumDifference;
                 });
             };
 
             cv.applyFilters = function (newGender) {
-
-            if (newGender) {
-                cv.updateCurrentGender(newGender)
-            }
+                if (newGender) {
+                    cv.updateCurrentGender(newGender)
+                }
                 cv.data = cv.genderFilter();
                 cv.data = cv.filterMinimum(cv.data);
                 return cv.goToPage(1);
@@ -131,8 +132,11 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                     cv.data = _.map(response.data.data, mapRecordToObject);
                     cv.data.pop();
                     cv.originalData = cv.data;
+                    cv.sortTextColumn('fAvgRate');
+                    cv.sortTextColumn('mAvgRate');
+                    cv.sortTextColumn('difference');
+                    cv.sortTextColumn('jobTitle');
                     cv.goToPage(1);
-                    console.log(cv.data);
                     $scope.$apply();
                 });
             }

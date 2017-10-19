@@ -6,7 +6,7 @@
             <tr>
 
                 <th class="col-md-4">
-                    <div class="h4" ng-click="cv.sortTextColumn('jobtitle')">Job Title</div>
+                    <div class="h4" ng-click="cv.sortTextColumn('jobTitle')">Job Title</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">results per page:</span>
                         <input ng-model="cv.pageSize" class="form-control" type="number"
@@ -52,7 +52,7 @@
             <tr ng-repeat="item in cv.currentPageData" class="animated rubberBand"
                 ng-class="{rowDisabled: !item.fAvgRate || !item.mAvgRate, fEarnMore: item.fAvgRate > item.mAvgRate,
                 mEarnMore: item.fAvgRate < item.mAvgRate, earnEqual: item.fAvgRate && item.mAvgRate && item.difference=='0.00'}">
-                <td>{{item.jobtitle}}</td>
+                <td>{{item.jobTitle}}</td>
                 <td>{{item.fAvgRate | currency}}</td>
                 <td>{{item.mAvgRate | currency}}</td>
                 <td>{{item.difference | makePositive | currency}}</td>

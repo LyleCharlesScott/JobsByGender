@@ -5,7 +5,7 @@ angular.module('genderWageTable.mapRecordToObject', ['ngRoute'])
 .service('mapRecordToObject', [function(){
         return function(record) {
             var columns = [
-                    'jobtitle',
+                    'jobTitle',
                     'fAvgRate', 'fEmpNum', 'fAvgLongevity',
                     'mAvgRate', 'mEmpNum', 'mAvgLongevity',
                     'totalAvgRate', 'totalEmpNum', 'totalAvgLongevity',
@@ -18,9 +18,10 @@ angular.module('genderWageTable.mapRecordToObject', ['ngRoute'])
                 output[columns[i]] = val;
             });
             if (output.fAvgRate && output.mAvgRate) {
-                output.difference = _.round(output.fAvgRate - output.mAvgRate, 2).toFixed(2);
+                output.difference = Math.abs(parseFloat(_.round(output.fAvgRate - output.mAvgRate, 2).toFixed(2)));
             } else {
-                output.difference = 'n/a';
+                console.log(output);
+                output.difference = null;
             }
 
             return output;
