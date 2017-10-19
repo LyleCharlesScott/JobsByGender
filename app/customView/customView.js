@@ -99,16 +99,6 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 cv.paginate(cv.data, 1);
             };
 
-            cv.sortTable = function(column) {
-                console.log(column);
-                console.log(cv.data);
-                cv.data.sort(function(a, b) {
-                    console.log(a[column]);
-                    return a[column] - b[column];
-                });
-                cv.paginate(cv.data, 1);
-            };
-
             if (!cv.data) {
                 Promise.resolve(dataService).then(function (response) {
                     cv.data = _.map(response.data.data, mapRecordToObject);
@@ -118,5 +108,4 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                     $scope.$apply();
                 });
             }
-        }])
-;
+        }]);
