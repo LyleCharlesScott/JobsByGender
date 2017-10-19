@@ -20,7 +20,6 @@ angular.module('genderWageTable.mapRecordToObject', ['ngRoute'])
             if (output.fAvgRate && output.mAvgRate) {
                 output.difference = Math.abs(parseFloat(_.round(output.fAvgRate - output.mAvgRate, 2).toFixed(2)));
             } else {
-                console.log(output);
                 output.difference = null;
             }
 

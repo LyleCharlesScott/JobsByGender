@@ -42,7 +42,7 @@
                     <div ng-click="cv.sortNumberColumn('difference')">Minimum Difference</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" ng-model="cv.minimumDifference"
+                        <input type="text" class="form-control" placeholder="0.00" ng-model="cv.minimumDifference" currency-mask
                                ng-change="cv.applyFilters()">
                     </div>
                 </th>

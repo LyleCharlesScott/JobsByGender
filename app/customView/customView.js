@@ -27,6 +27,8 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 difference: false,
                 jobTitle: false
             };
+            cv.numberColumn = ['fAvgRate', 'mAvgRate', 'difference'];
+            cv.textColumn = ['jobTitle'];
 
             cv.paginate = function (page) {
                 cv.currentPageNumber = page;
@@ -84,13 +86,12 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.sortNumberColumn = function (column) {
                 cv.toggle[column] = !cv.toggle[column];
                 cv.data = _.orderBy(cv.data, [function (row) {
-                    if (!(_.isNull(row[column]))) {
+                    if (row[column] || (parseFloat(row[column]) === 0)) {
                         return parseFloat(row[column]);
                     } else {
                         return cv.toggle[column] ? 'z' : '';
                     }
                 }], (cv.toggle[column] ? 'asc' : 'desc'));
-                console.log(cv.data);
                 return cv.goToPage(1);
             };
 
@@ -127,15 +128,23 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                 return cv.goToPage(1);
             };
 
+            cv.initializeColumns = function () {
+                _.forEach(cv.numberColumn,
+                    function (column) {
+                        cv.sortNumberColumn(column);
+                    });
+                _.forEach(cv.textColumn,
+                    function (column) {
+                        cv.sortTextColumn(column);
+                    });
+            };
+
             if (!cv.data) {
                 Promise.resolve(dataService).then(function (response) {
                     cv.data = _.map(response.data.data, mapRecordToObject);
                     cv.data.pop();
                     cv.originalData = cv.data;
-                    cv.sortTextColumn('fAvgRate');
-                    cv.sortTextColumn('mAvgRate');
-                    cv.sortTextColumn('difference');
-                    cv.sortTextColumn('jobTitle');
+                    cv.initializeColumns();
                     cv.goToPage(1);
                     $scope.$apply();
                 });
