@@ -109,7 +109,8 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                     return dataToFilter;
                 } else {
                     return _.filter(dataToFilter, function (row) {
-                        return Math.sign(row.difference) === cv.genderGlossery[cv.currentGender];
+                        return (!_.isNull(row.fAvgRate) && !_.isNull(row.mAvgRate)) &&
+                            (Math.sign(row.fAvgRate - row.mAvgRate) === cv.genderGlossery[cv.currentGender]);
                     });
                 }
             };
