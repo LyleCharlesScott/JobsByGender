@@ -86,11 +86,12 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.sortNumberColumn = function (column) {
                 cv.toggle[column] = !cv.toggle[column];
                 cv.data = _.orderBy(cv.data, [function (row) {
-                    if (row[column] || (parseFloat(row[column]) === 0)) {
-                        return parseFloat(row[column]);
+                    if (_.isNull(row[column])) {
+                        return cv.toggle[column] ? 'z' : -1;
                     } else {
-                        return cv.toggle[column] ? 'z' : '';
+                        return parseFloat(row[column]);
                     }
+
                 }], (cv.toggle[column] ? 'asc' : 'desc'));
                 return cv.goToPage(1);
             };
@@ -121,7 +122,7 @@ angular.module('genderWageTable.customView', ['ngRoute'])
 
             cv.applyFilters = function (newGender) {
                 if (newGender) {
-                    cv.updateCurrentGender(newGender)
+                    cv.updateCurrentGender(newGender);
                 }
                 cv.data = cv.genderFilter();
                 cv.data = cv.filterMinimum(cv.data);
