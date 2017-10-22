@@ -13,7 +13,7 @@ app.get('/secret', function(request, response) {
 
 app.route('/')
     .get(function(req, res){
-        res.sendFile('index.html', {root: __dirname + '/'});
+        res.sendFile('/', {root: __dirname + '/'});
     });
 
 app.get('/*', function(req, res) {
