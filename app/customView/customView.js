@@ -19,7 +19,7 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.pageSize = 25;
             cv.currentPageNumber = 1;
             cv.minimumDifference = '';
-            cv.genderGlossery = {men: -1, women: 1};
+            cv.genderGlossery = {men: -1, women: 1, neither: 0};
             cv.currentGender = 'none';
             cv.toggle = {
                 mAvgRate: false,

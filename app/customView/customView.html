@@ -42,11 +42,22 @@
                     <div ng-click="cv.sortNumberColumn('difference')">Minimum Difference</div>
                     <div class="input-group animated bounceInDown">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" placeholder="0.00" ng-model="cv.minimumDifference" currency-mask
+                        <input type="text" class="form-control" placeholder="0.00" ng-model="cv.minimumDifference"
+                               currency-mask
                                ng-change="cv.applyFilters()">
                     </div>
                 </th>
-                <th class="col-md-2">Who earns more?</th>
+                <th class="col-md-2">
+                    <div>Who earns</div>
+                    <div>more?</div>
+                    <div ng-click="cv.applyFilters('neither')">
+                        <label class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x animated bounceInDown"
+                               ng-class="{['genderButtonSelect']: cv.currentGender === 'neither'}"></i>
+                            <i class="fa fa-balance-scale fa-inverse fa-stack-1x animated bounceInDown"></i>
+                        </label>
+                    </div>
+                </th>
             </tr>
 
             <tr ng-repeat="item in cv.currentPageData" class="animated rubberBand"
@@ -59,7 +70,8 @@
                 <td>
                     <span ng-if="item.fAvgRate > item.mAvgRate" class="fa fa-venus"></span>
                     <span ng-if="item.fAvgRate < item.mAvgRate" class="fa fa-mars"></span>
-                    <span ng-if="item.fAvgRate && item.mAvgRate && item.difference=='0.00'" class="fa fa-balance-scale"></span>
+                    <span ng-if="item.fAvgRate && item.mAvgRate && item.difference=='0.00'"
+                          class="fa fa-balance-scale"></span>
                 </td>
             </tr>
         </table>
