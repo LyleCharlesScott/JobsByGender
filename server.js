@@ -11,6 +11,11 @@ app.get('/secret', function(request, response) {
     response.status(200).send('<h1>This is a secret place. Do not touch anything here</h1>')
 });
 
+app.route('/')
+    .get(function(req, res){
+        res.sendFile('index.html', {root: 'app/'});
+    });
+
 app.get('/*', function(req, res) {
     res.status(404).send('404: There is no page here');
 });
