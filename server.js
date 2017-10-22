@@ -5,7 +5,7 @@ var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/app'));
 
 app.get('/secret', function(request, response) {
     response.status(200).send('<h1>This is a secret place. Do not touch anything here</h1>')
@@ -13,7 +13,7 @@ app.get('/secret', function(request, response) {
 
 app.route('/')
     .get(function(req, res){
-        res.sendFile('', {root: __dirname + '/app'});
+        res.sendFile('/', {root: __dirname + '/app'});
     });
 
 app.get('/*', function(req, res) {
