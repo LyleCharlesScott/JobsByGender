@@ -22,3 +22,6 @@ The Mars and Venus icons change the data diplay to only show job titles in which
 respectively. The next input field is for filtering the data by minimum difference in hourly wage. Click
 on column titles to toggle between ascending and descending column sort. Pagination controls are at the
 bottom of the chart.
+
+Demonstration hosted at:
+https://jobs-by-gender.herokuapp.com
