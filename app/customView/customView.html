@@ -1,10 +1,9 @@
 <section class="container">
-    <h1>Jobs by Gender<span class="small pull-right">data from https://data.seattle.gov</span></h1>
-
     <div class="container" id="customView">
+        <h1>Jobs by Gender</h1>
+        <span class="small pull-right">data from https://data.seattle.gov</span>
         <table ng-model="cv.data" class="table">
             <tr>
-
                 <th class="col-md-4">
                     <div class="h4" ng-click="cv.sortTextColumn('jobTitle')">Job Title</div>
                     <div class="input-group animated bounceInDown">
@@ -88,9 +87,9 @@
         </button>
         <span id="cvPageNumber" class="h1">{{cv.currentPageNumber}}</span>
 
+        <footer class="small">
+            <a href="https://github.com/LyleCharlesScott/JobsByGender">Source on GitHub</a>
+            <span class="pull-right">LyleCharlesScott@icloud.com</span></div>
+        </footer>
     </div>
-    <footer class="small">
-        <a href="https://github.com/LyleCharlesScott/JobsByGender">Source on GitHub</a>
-        <span class="pull-right">LyleCharlesScott@icloud.com</span></div>
-    </footer>
 </section>
