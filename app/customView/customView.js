@@ -148,7 +148,6 @@ angular.module('genderWageTable.customView', ['ngRoute'])
 
             if (!cv.data) {
                 Promise.resolve(dataService).then(function (response) {
-                    console.log(response);
                     cv.data = _.map(response.data.data, mapRecordToObject);
                     cv.data.pop();
                     cv.originalData = cv.data;
