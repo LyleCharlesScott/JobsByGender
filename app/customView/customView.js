@@ -16,7 +16,7 @@ angular.module('genderWageTable.customView', ['ngRoute'])
         function (dataService, mapRecordToObject, $scope) {
 
             var cv = this;
-            cv.pageSize = 10;
+            cv.pageSize = 8;
             cv.currentPageNumber = 1;
             cv.minimumDifference = '';
             cv.genderGlossery = {men: -1, women: 1, neither: 0};

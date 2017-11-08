@@ -60,3 +60,7 @@
   color: lightgrey;
   font-style: italic;
 }
+
+.borderless {
+  border: 0;
+}

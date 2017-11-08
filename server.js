@@ -1,14 +1,15 @@
-'use strict'
+'use strict';
 
 var express = require('express');
 var app = express();
+var data = require('./data.json');
 
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/app'));
 
-app.get('/secret', function(request, response) {
-    response.status(200).send('<h1>This is a secret place. Do not touch anything here</h1>')
+app.get('/data', function(req, res) {
+    res.send(data);
 });
 
 app.route('/')

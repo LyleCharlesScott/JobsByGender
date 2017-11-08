@@ -20,7 +20,7 @@
                         <span ng-click="cv.sortNumberColumn('fAvgRate')">Women's Average Hourly Rate</span>
                         <div ng-click="cv.applyFilters('women')">
                             <label class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x animated bounceInDown"
+                                <i class="fa fa-circle fa-stack-2x animated slideInUp"
                                    ng-class="{['genderButtonSelect']: cv.currentGender === 'women'}"></i>
                                 <i class="fa fa-venus fa-inverse fa-stack-1x animated bounceInDown"></i>
                             </label>
@@ -61,7 +61,7 @@
                 </th>
             </tr>
 
-            <tr ng-repeat="item in cv.currentPageData" class="animated rubberBand"
+            <tr ng-repeat="item in cv.currentPageData" class="animated slideInUp"
                 ng-class="{rowDisabled: !item.fAvgRate || !item.mAvgRate, fEarnMore: item.fAvgRate > item.mAvgRate,
                 mEarnMore: item.fAvgRate < item.mAvgRate, earnEqual: item.fAvgRate && item.mAvgRate && item.difference=='0.00'}">
                 <td>{{item.jobTitle}}</td>
@@ -76,8 +76,8 @@
                 </td>
             </tr>
         </table>
-        <div class="container">
-            <form class="col-md-5">
+        <div class="container d-flex list-group">
+            <form class="p-2 col-md-5 list-group-item borderless">
                 <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
                 <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">
                     Previous
@@ -90,12 +90,16 @@
                 </button>
                 <span id="cvPageNumber" class="h4">Page {{cv.currentPageNumber}}</span>
             </form>
-            <div class="col-md-5">
-                <p>
+            <div class="col-md-5 d-flex flex-column p-2 list-group-item borderless">
+                <p class="p-2">
                     <span class="fa fa-fw fa-github"></span>
                     <a class="small" ng-href="https://github.com/LyleCharlesScott/JobsByGender">https://github.com/LyleCharlesScott/JobsByGender</a>
                 </p>
-                <p>
+                <p class="p-2">
+                    <span class=" fa fa-fw fa-linkedin"></span>
+                    <a class="small" title="LinkedIn" ng-href="https://www.linkedin.com/in/lylecharlesscott/">https://www.linkedin.com/in/lylecharlesscott/</a>
+                </p>
+                <p class="p-2">
                     <span class=" fa fa-fw fa-envelope"></span>
                     <a class="small" title="Author Feedback" ng-href="#" ng-click="cv.feedback()">lylecharlesscott@icloud.com</a>
                 </p>
