@@ -33,7 +33,8 @@ angular.module('genderWageTable.customView', ['ngRoute'])
             cv.paginate = function (page) {
                 cv.currentPageNumber = page;
                 page--;
-                return cv.currentPageData = cv.data.slice(page * cv.pageSize, (page + 1) * cv.pageSize);
+                cv.currentPageData = cv.data.slice(page * cv.pageSize, (page + 1) * cv.pageSize);
+                return cv.currentPageData;
             };
 
             cv.first = function () {
@@ -42,7 +43,7 @@ angular.module('genderWageTable.customView', ['ngRoute'])
 
             cv.previous = function () {
                 if (cv.currentPageNumber > 1) {
-                    cv.currentPageNumber--
+                    cv.currentPageNumber--;
                 }
                 cv.goToPage(cv.currentPageNumber);
             };
@@ -139,6 +140,10 @@ angular.module('genderWageTable.customView', ['ngRoute'])
                     function (column) {
                         cv.sortTextColumn(column);
                     });
+            };
+
+            cv.feedback = function () {
+                window.location='mailto:LyleCharlesScott@icloud.com?subject=Jobs By Gender Table Feedback';
             };
 
             if (!cv.data) {

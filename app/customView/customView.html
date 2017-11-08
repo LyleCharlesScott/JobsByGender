@@ -1,7 +1,8 @@
 <section class="container">
     <div class="container" id="customView">
-        <h1>Jobs by Gender
-            <span class="small pull-right">data from https://data.seattle.gov</span>
+        <h1>
+            <span class="align-baseine">Jobs by Gender</span>
+            <span class="small pull-right align-baseline">data from <a ng-href="https://data.seattle.gov/City-Business/City-of-Seattle-Wages-Comparison-by-Gender-All-Job/cf52-s8er">City of Seattle</a></span>
         </h1>
         <table ng-model="cv.data" class="table">
             <tr>
@@ -75,22 +76,30 @@
                 </td>
             </tr>
         </table>
-
-        <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
-        <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">
-            Previous
-        </button>
-        <button class="btn btn-primary" ng-click="cv.next()"
-                ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next
-        </button>
-        <button class="btn btn-primary" ng-click="cv.last()"
-                ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}
-        </button>
-        <span id="cvPageNumber" class="h1">{{cv.currentPageNumber}}</span>
-
-        <footer class="page-footer blue">
-            <a href="https://github.com/LyleCharlesScott/JobsByGender">Source on GitHub</a>
-            <span class="pull-right">LyleCharlesScott@icloud.com</span></div>
-        </footer>
+        <div class="container">
+            <form class="col-md-5">
+                <button class="btn btn-primary" ng-click="cv.first()" ng-class="{disabled: cv.currentPageNumber==1}">1</button>
+                <button class="btn btn-primary" ng-click="cv.previous()" ng-class="{disabled: cv.currentPageNumber==1}">
+                    Previous
+                </button>
+                <button class="btn btn-primary" ng-click="cv.next()"
+                        ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">Next
+                </button>
+                <button class="btn btn-primary" ng-click="cv.last()"
+                        ng-class="{disabled: cv.currentPageNumber==cv.totalPages()}">{{cv.totalPages()}}
+                </button>
+                <span id="cvPageNumber" class="h4">Page {{cv.currentPageNumber}}</span>
+            </form>
+            <div class="col-md-5">
+                <p>
+                    <span class="fa fa-fw fa-github"></span>
+                    <a class="small" ng-href="https://github.com/LyleCharlesScott/JobsByGender">https://github.com/LyleCharlesScott/JobsByGender</a>
+                </p>
+                <p>
+                    <span class=" fa fa-fw fa-envelope"></span>
+                    <a class="small" title="Author Feedback" ng-href="#" ng-click="cv.feedback()">lylecharlesscott@icloud.com</a>
+                </p>
+            </div>
+        </div>
     </div>
 </section>
