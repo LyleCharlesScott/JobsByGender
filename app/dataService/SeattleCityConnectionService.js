@@ -5,7 +5,7 @@ angular.module('genderWageTable.SeattleCityConnectionService', ['ngRoute'])
 .service('dataService',["$http", function($http){
     return $http({
         method: 'GET',
-        url: 'https://localhost:5000/data'
+        url: 'https://jobs-by-gender.herokuapp.com/data'
     }).then(function sendLocal(response) {
         console.log(response);
         return response;
